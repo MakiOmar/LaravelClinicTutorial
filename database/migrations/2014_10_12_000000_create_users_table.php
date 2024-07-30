@@ -15,12 +15,12 @@ return new class extends Migration
             $table->bigIncrements('ID');
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('address');
-            $table->string('house_nimber');
-            $table->string('name');
+            $table->string('address')->nullable();
+            $table->string('house_number')->nullable();
+            $table->string('name')->nullable();
             $table->string('role');
             $table->rememberToken();
             $table->timestamps();

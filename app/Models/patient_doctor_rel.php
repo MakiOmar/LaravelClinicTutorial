@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class patient_doctor_rel extends Model
 {
     use HasFactory;
-
+    protected $primaryKey = 'ID';
+    protected $table = 'patient_doctor_rel';
     /**
      * The attributes that are mass assignable.
      *

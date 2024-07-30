@@ -15,10 +15,10 @@ return new class extends Migration
             $table->bigIncrements('ID');
             $table->bigInteger('doctor_id')->unsigned();
             $table->bigInteger('patient_id')->unsigned();
-            $table->integer('stage');
-            $table->string('diagnose', 255);
-            $table->string('details', 255);
-            $table->string('prescription', 255);
+            $table->integer('stage')->nullable();
+            $table->string('diagnose')->nullable();
+            $table->string('details')->nullable();
+            $table->string('prescription')->nullable();
 
             // Define foreign key constraints.
             $table->foreign('doctor_id')->references('ID')->on('users');
