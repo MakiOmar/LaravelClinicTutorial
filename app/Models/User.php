@@ -56,6 +56,10 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Profile');
     }
+    protected function accessTokens()
+    {
+        return $this->hasMany('App\Models\User', 'tokenable_id');
+    }
 
     public function withProfile()
     {

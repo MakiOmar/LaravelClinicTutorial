@@ -15,6 +15,37 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property string $tokenable_type
+ * @property int $tokenable_id
+ * @property string $name
+ * @property string $token
+ * @property string|null $abilities
+ * @property string|null $last_used_at
+ * @property string|null $expires_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken query()
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken whereAbilities($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken whereExpiresAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken whereLastUsedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken whereToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken whereTokenableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken whereTokenableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AccessToken whereUpdatedAt($value)
+ */
+	class AccessToken extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @property mixed $password
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count

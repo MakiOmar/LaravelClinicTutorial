@@ -6,6 +6,7 @@ use App\Http\Controllers\API\DemoController;
 use App\Http\Controllers\API\LoginController as ApiLoginController;
 use App\Http\Controllers\API\LogoutController as ApiLogoutController;
 use App\Http\Controllers\API\RegistrationController as RegController;
+use App\Http\Controllers\API\User\UserApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +19,16 @@ use App\Http\Controllers\API\RegistrationController as RegController;
 |
 */
 
-Route::middleware(['auth:sanctum'])
+Route::middleware(['auth.gate'])
    ->group(function () {
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
       Route::post('/logout', ApiLogoutController::class);
+      Route::group(array('prefix' => 'user'), function () {
+            Route::get('/all', [ UserApiController::class, 'index' ]);
+            Route::get('/show/{user}', [ UserApiController::class, 'show' ]);
+      });
    });
 
 Route::post('/login', ApiLoginController::class);
