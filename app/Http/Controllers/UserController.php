@@ -121,7 +121,9 @@ class UserController extends Controller
         $user->profile->bio = $request['bio'] ?? null;
         $user->profile->gender = $request['gender'] ?? 1;
         $user->profile->save();
-        return redirect()->route('user.edit', [ 'user' => $user->ID ])->with('success', 'User has been edited successflly');
+        return redirect()
+        ->route('user.edit', [ 'user' => $user->ID ])
+        ->with('success', 'User has been edited successflly');
     }
 
     /**

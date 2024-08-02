@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use League\Config\Exception\ValidationException;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
