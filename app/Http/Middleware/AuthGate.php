@@ -34,7 +34,6 @@ class AuthGate
         if (! $access_tokens || empty($access_tokens)) {
             return $this->errorResponse('Error', 400, 'Not Authorized!');
         }
-
         return $next($request);
     }
 }

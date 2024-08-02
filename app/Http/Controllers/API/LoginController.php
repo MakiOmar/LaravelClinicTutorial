@@ -5,8 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Support\Facades\Response;
 
 class LoginController extends Controller
 {
@@ -39,8 +42,15 @@ class LoginController extends Controller
         if (! Hash::check($request->password, $user->password)) {
             return $this->errorResponse('Wrong passowrd!', 422, null);
         }
-        return $user
+
+        $token = $user
                 ->createToken($request->email)
                 ->plainTextToken;
+        $cookie = cookie('sanctum_token', $token, 60 * 24);
+        // Return the response with the cookie
+        return response()->json([
+            'message' => 'Login successful',
+            'token' => $token,
+        ])->withCookie($cookie);
     }
 }
