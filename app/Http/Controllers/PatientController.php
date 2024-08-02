@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class PatientController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -20,7 +19,7 @@ class PatientController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('list-patients', array( 'user' => $user ) );
+        return view('list-patients', array( 'user' => $user ));
     }
 
     /**
@@ -29,7 +28,7 @@ class PatientController extends Controller
     public function create()
     {
         $user = auth()->user();
-        return view('add-patient', array( 'user' => $user ) );
+        return view('add-patient', array( 'user' => $user ));
     }
 
     /**
@@ -39,7 +38,7 @@ class PatientController extends Controller
     {
         return User::create([
             'name' => $request['name'],
-            'username' =>'patient_' . uniqid(),
+            'username' => 'patient_' . uniqid(),
             'email' => $request['email'],
             'role' => 'patient',
             'phone' => $request['phone'] ?? null,

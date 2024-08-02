@@ -10,7 +10,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     protected $primaryKey = 'ID';
 
@@ -49,4 +51,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected function profile()
+    {
+        return $this->hasOne('App\Models\Profile');
+    }
+    
+    public function withProfile()
+    {
+        return $this->profile();
+    }
+
+
+    protected function products()
+    {
+        return $this->hasMany('App\Models\Product', 'user_id');
+    }
 }

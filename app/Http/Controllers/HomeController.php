@@ -24,6 +24,6 @@ class HomeController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view( 'home', array( 'user' => $user ) );
+        return view('home', array( 'user' => $user ));
     }
 }

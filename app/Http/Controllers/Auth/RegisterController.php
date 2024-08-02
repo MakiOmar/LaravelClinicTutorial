@@ -20,7 +20,6 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-
     use RegistersUsers;
 
     /**
@@ -55,7 +54,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role'     => ['required', 'string', function ($attribute, $value, $fail) {
                 if (!in_array($value, ['doctor', 'patient'])) {
-                    $fail('The '.$attribute.' must be either "doctor" or "patient".');
+                    $fail('The ' . $attribute . ' must be either "doctor" or "patient".');
                 }
             }],
             'phone'    => ['sometimes', 'nullable', 'string'],
