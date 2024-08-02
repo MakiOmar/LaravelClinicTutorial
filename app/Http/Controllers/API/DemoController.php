@@ -9,17 +9,17 @@ class DemoController extends Controller
 {
     use RespController;
 
-    public function exampleMethod(Request $request)
+    public function successed(Request $request)
     {
         // Your logic here
         $data = ['example' => 'data'];
-        return response( $data, 200 );
+        return response($data, 200);
 
         // Return a success response
         return $this->successResponse($data);
     }
 
-    public function exampleErrorMethod(Request $request)
+    public function failed(Request $request)
     {
         // Your logic here
 

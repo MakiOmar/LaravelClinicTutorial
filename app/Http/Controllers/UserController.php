@@ -21,7 +21,7 @@ class UserController extends Controller
             $query->where('user_id', '!=', $currentUserId);
         })->paginate(10);
 
-        return view( 'users.index', compact( 'user', 'usersProfiles' ) );
+        return view('users.index', compact('user', 'usersProfiles'));
     }
 
     /**
@@ -122,7 +122,6 @@ class UserController extends Controller
         $user->profile->gender = $request['gender'] ?? 1;
         $user->profile->save();
         return redirect()->route('user.edit', [ 'user' => $user->ID ])->with('success', 'User has been edited successflly');
-
     }
 
     /**
