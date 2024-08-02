@@ -9,6 +9,7 @@ use App\Http\Controllers\API\RegistrationController as RegController;
 use App\Http\Controllers\API\User\UserApiController;
 
 /*
+|
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
