@@ -21,11 +21,11 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home.home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
+/*
 Route::get('/add-patient', [PatientController::class, 'create'])->name('patient.form');
 Route::post('/add-patient', [PatientController::class, 'store'])->name('store.patient');
 Route::get('/list-patients', [PatientController::class, 'index'])->name('list.patients');
-
+*/
 Route::group(
     array(
         'middleware' => [ 'auth', 'profile' ]
