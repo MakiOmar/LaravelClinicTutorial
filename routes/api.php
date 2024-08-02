@@ -19,19 +19,30 @@ use App\Http\Controllers\API\User\UserApiController;
 |
 */
 
-Route::middleware(['auth.gate'])
-   ->group(function () {
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        });
-      Route::post('/logout', ApiLogoutController::class);
-      Route::group(array('prefix' => 'user'), function () {
-            Route::get('/all', [ UserApiController::class, 'index' ]);
-            Route::get('/show/{user}', [ UserApiController::class, 'show' ]);
-      });
-   });
+Route::middleware(array( 'auth.gate' ))
+    ->group(
+        function () {
+            Route::get(
+                '/user',
+                function (Request $request) {
+                    return $request->user();
+                }
+            );
+            Route::post('/logout', ApiLogoutController::class);
+            Route::group(
+                array( 'prefix' => 'user' ),
+                function () {
+                    Route::get('/all', array( UserApiController::class, 'index' ));
+                    Route::get('/show/{user}', array( UserApiController::class, 'show' ));
+                    Route::post('/create', array( UserApiController::class, 'store' ));
+                    Route::put('/update/{user}', array( UserApiController::class, 'update' ));
+                    Route::delete('/delete/{user}', array( UserApiController::class, 'destroy' ));
+                }
+            );
+        }
+    );
 
 Route::post('/login', ApiLoginController::class);
 Route::post('/register', RegController::class);
 
-Route::get('demo', [ DemoController::class, 'exampleMethod' ]);
+Route::get('demo', array( DemoController::class, 'exampleMethod' ));

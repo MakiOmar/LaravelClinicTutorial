@@ -22,7 +22,6 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -30,7 +29,6 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -38,7 +36,6 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        //
     }
 
     /**
@@ -46,7 +43,6 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        //
     }
 
     /**
@@ -55,29 +51,31 @@ class ProfileController extends Controller
     public function update(Request $request, Profile $profile)
     {
         // Validation rules
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'age' => 'required|integer|min:1|max:120',
-            'gender' => 'required|in:0,1',
-            'bio' => 'nullable|string|max:1000',
-        ]);
+        $validated = $request->validate(
+            array(
+                'name'       => 'required|string|max:255',
+                'first_name' => 'required|string|max:255',
+                'last_name'  => 'required|string|max:255',
+                'address'    => 'required|string|max:255',
+                'age'        => 'required|integer|min:1|max:120',
+                'gender'     => 'required|in:0,1',
+                'bio'        => 'nullable|string|max:1000',
+            )
+        );
 
         // Method one
         // $profile->update($validated);
 
         // Method two
-        $user = Auth()->user();
+        $user       = Auth()->user();
         $user->name = $validated['name'];
 
         $user->profile->first_name = $validated['first_name'];
-        $user->profile->last_name = $validated['last_name'];
-        $user->profile->address = $validated['address'];
-        $user->profile->age = $validated['age'];
-        $user->profile->bio = $validated['bio'];
-        $user->profile->gender = $validated['gender'];
+        $user->profile->last_name  = $validated['last_name'];
+        $user->profile->address    = $validated['address'];
+        $user->profile->age        = $validated['age'];
+        $user->profile->bio        = $validated['bio'];
+        $user->profile->gender     = $validated['gender'];
         $user->profile->save();
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
@@ -87,6 +85,5 @@ class ProfileController extends Controller
      */
     public function destroy(Profile $profile)
     {
-        //
     }
 }

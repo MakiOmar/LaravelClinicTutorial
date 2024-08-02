@@ -42,44 +42,53 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role'     => ['required', 'string', function ($attribute, $value, $fail) {
-                if (!in_array($value, ['doctor', 'patient'])) {
-                    $fail('The ' . $attribute . ' must be either "doctor" or "patient".');
-                }
-            }],
-            'phone'    => ['sometimes', 'nullable', 'string'],
-            'home_number' => ['sometimes', 'nullable', 'string'],
-            'address' => ['sometimes', 'nullable', 'string'],
-        ]);
+        return Validator::make(
+            $data,
+            array(
+                'username'    => array( 'required', 'string', 'max:255', 'unique:users' ),
+                'name'        => array( 'required', 'string', 'max:255' ),
+                'email'       => array( 'required', 'string', 'email', 'max:255', 'unique:users' ),
+                'password'    => array( 'required', 'string', 'min:8', 'confirmed' ),
+                'role'        => array(
+                    'required',
+                    'string',
+                    function ($attribute, $value, $fail) {
+                        if (! in_array($value, array( 'doctor', 'patient' ))) {
+                            $fail('The ' . $attribute . ' must be either "doctor" or "patient".');
+                        }
+                    },
+                ),
+                'phone'       => array( 'sometimes', 'nullable', 'string' ),
+                'home_number' => array( 'sometimes', 'nullable', 'string' ),
+                'address'     => array( 'sometimes', 'nullable', 'string' ),
+            )
+        );
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \App\Models\User
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'role' => $data['role'],
-            'phone' => $data['phone'] ?? null,
-            'home_number' => $data['home_number'] ?? null,
-            'address' => $data['address'] ?? null,
-            'password' => Hash::make($data['password']),
-        ]);
+        return User::create(
+            array(
+                'name'        => $data['name'],
+                'username'    => $data['username'],
+                'email'       => $data['email'],
+                'role'        => $data['role'],
+                'phone'       => $data['phone'] ?? null,
+                'home_number' => $data['home_number'] ?? null,
+                'address'     => $data['address'] ?? null,
+                'password'    => Hash::make($data['password']),
+            )
+        );
     }
 }

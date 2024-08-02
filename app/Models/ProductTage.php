@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductTage extends Model
 {
-    protected $fillable = [
-        'tag_id', 'product_id'
-    ];
+    protected $fillable = array(
+        'tag_id',
+        'product_id',
+    );
 
     protected $table = 'product_tages';
 

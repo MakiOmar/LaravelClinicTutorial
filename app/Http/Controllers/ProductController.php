@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index()
     {
         // Method one
-        $user = Auth()->user();
+        $user     = Auth()->user();
         $products = $user->products;
 
         // Method two
@@ -45,14 +45,16 @@ class ProductController extends Controller
     }
     protected function validation($request)
     {
-        return $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'rate' => 'required|integer|min:1|max:5',
-            'tag_id' => 'sometimes|nullable|array',
-            'tag_id.*' => 'integer',
-        ]);
+        return $request->validate(
+            array(
+                'title'       => 'required|string|max:255',
+                'description' => 'required|string',
+                'price'       => 'required|numeric|min:0',
+                'rate'        => 'required|integer|min:1|max:5',
+                'tag_id'      => 'sometimes|nullable|array',
+                'tag_id.*'    => 'integer',
+            )
+        );
     }
     /**
      * Store a newly created resource in storage.
@@ -60,24 +62,24 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validation($request);
-        $product = Product::create(
-            [
-                'user_id' => Auth()->id(),
-                'title' => $validated['title'],
+        $product   = Product::create(
+            array(
+                'user_id'     => Auth()->id(),
+                'title'       => $validated['title'],
                 'description' => $validated['description'],
-                'price' => $validated['price'],
-                'rate' => $validated['rate'],
-            ]
+                'price'       => $validated['price'],
+                'rate'        => $validated['rate'],
+            )
         );
         foreach ($validated['tag_id'] as $tag_id) {
             ProductTage::create(
-                [
+                array(
                     'product_id' => $product->id,
                     'tag_id'     => $tag_id,
-                ]
+                )
             );
         }
-        return redirect()->route('product.edit', ['product' => $product->id]);
+        return redirect()->route('product.edit', array( 'product' => $product->id ));
     }
 
     /**
@@ -109,10 +111,10 @@ class ProductController extends Controller
     {
         $validated = $this->validation($request);
 
-        $product->title = $validated['title'];
+        $product->title       = $validated['title'];
         $product->description = $validated['description'];
-        $product->price = $validated['price'];
-        $product->rate = $validated['rate'];
+        $product->price       = $validated['price'];
+        $product->rate        = $validated['rate'];
         $product->save();
         // Find the existing ProductTag record.
         $productTags = $product->tags->pluck('id')->toArray();
@@ -127,10 +129,10 @@ class ProductController extends Controller
         foreach ($validated['tag_id'] as $tag_id) {
             if (! $this->hasTag($product->id, $tag_id)) {
                 ProductTage::create(
-                    [
+                    array(
                         'product_id' => $product->id,
                         'tag_id'     => $tag_id,
-                    ]
+                    )
                 );
             }
         }

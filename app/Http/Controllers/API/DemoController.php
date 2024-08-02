@@ -12,7 +12,7 @@ class DemoController extends Controller
     public function successed(Request $request)
     {
         // Your logic here
-        $data = ['example' => 'data'];
+        $data = array( 'example' => 'data' );
         return response($data, 200);
 
         // Return a success response

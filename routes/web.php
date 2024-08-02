@@ -20,8 +20,8 @@ use App\Http\Controllers\UserController;
 */
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->name('home.home');
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', array( HomeController::class, 'index' ))->name('home.home');
+Route::get('/home', array( HomeController::class, 'index' ))->name('home');
 /*
 Route::get('/add-patient', [PatientController::class, 'create'])->name('patient.form');
 Route::post('/add-patient', [PatientController::class, 'store'])->name('store.patient');
@@ -29,60 +29,60 @@ Route::get('/list-patients', [PatientController::class, 'index'])->name('list.pa
 */
 Route::group(
     array(
-        'middleware' => [ 'auth', 'profile' ]
+        'middleware' => array( 'auth', 'profile' ),
     ),
     function () {
         Route::group(
             array(
-                'prefix' => 'profile'
+                'prefix' => 'profile',
             ),
             function () {
-                Route::get('/', [ ProfileController::class, 'index' ])->name('profile');
-                Route::put('/', [ ProfileController::class, 'update' ])->name('profile.update');
+                Route::get('/', array( ProfileController::class, 'index' ))->name('profile');
+                Route::put('/', array( ProfileController::class, 'update' ))->name('profile.update');
             }
         );
 
         Route::group(
             array(
-                'prefix' => 'tags'
+                'prefix' => 'tags',
             ),
             function () {
-                Route::get('/', [ TagController::class, 'index' ])->name('tags');
-                Route::get('/create', [ TagController::class, 'create' ])->name('tag.create');
-                Route::post('/create', [ TagController::class, 'store' ])->name('tag.store');
-                Route::delete('/delete/{tag}', [ TagController::class, 'destroy' ])->name('tag.destroy');
+                Route::get('/', array( TagController::class, 'index' ))->name('tags');
+                Route::get('/create', array( TagController::class, 'create' ))->name('tag.create');
+                Route::post('/create', array( TagController::class, 'store' ))->name('tag.store');
+                Route::delete('/delete/{tag}', array( TagController::class, 'destroy' ))->name('tag.destroy');
             }
         );
         Route::group(
             array(
-                'prefix' => 'product'
+                'prefix' => 'product',
             ),
             function () {
-                Route::get('/', [ ProductController::class, 'index' ])->name('product');
-                Route::get('/show/{product}', [ ProductController::class, 'show' ])->name('product.show');
-                Route::get('/edit/{product}', [ ProductController::class, 'edit' ])->name('product.edit');
-                Route::get('/create', [ ProductController::class, 'create' ])->name('product.create');
-                Route::put('/edit/{product}', [ ProductController::class, 'update' ])->name('product.update');
-                Route::post('/create', [ ProductController::class, 'store' ])->name('product.store');
-                Route::delete('/delete/{product}', [ ProductController::class, 'destroy' ])->name('product.destroy');
+                Route::get('/', array( ProductController::class, 'index' ))->name('product');
+                Route::get('/show/{product}', array( ProductController::class, 'show' ))->name('product.show');
+                Route::get('/edit/{product}', array( ProductController::class, 'edit' ))->name('product.edit');
+                Route::get('/create', array( ProductController::class, 'create' ))->name('product.create');
+                Route::put('/edit/{product}', array( ProductController::class, 'update' ))->name('product.update');
+                Route::post('/create', array( ProductController::class, 'store' ))->name('product.store');
+                Route::delete('/delete/{product}', array( ProductController::class, 'destroy' ))->name('product.destroy');
             }
         );
 
         Route::group(
             array(
-                'prefix' => 'users'
+                'prefix' => 'users',
             ),
             function () {
-                Route::get('/', [ UserController::class, 'index' ])->name('users');
-                Route::get('/show/{user}', [ UserController::class, 'show' ])->name('user.show');
-                Route::get('/edit/{user}', [ UserController::class, 'edit' ])->name('user.edit');
-                Route::get('/create', [ UserController::class, 'create' ])->name('user.create');
-                Route::put('/edit/{user}', [ UserController::class, 'update' ])->name('user.update');
-                Route::post('/create', [ UserController::class, 'store' ])->name('user.store');
-                Route::delete('/delete/{user}', [ UserController::class, 'destroy' ])->name('user.destroy');
+                Route::get('/', array( UserController::class, 'index' ))->name('users');
+                Route::get('/show/{user}', array( UserController::class, 'show' ))->name('user.show');
+                Route::get('/edit/{user}', array( UserController::class, 'edit' ))->name('user.edit');
+                Route::get('/create', array( UserController::class, 'create' ))->name('user.create');
+                Route::put('/edit/{user}', array( UserController::class, 'update' ))->name('user.update');
+                Route::post('/create', array( UserController::class, 'store' ))->name('user.store');
+                Route::delete('/delete/{user}', array( UserController::class, 'destroy' ))->name('user.destroy');
             }
         );
 
-        Route::get('user/products/{user}', [ ProductController::class, 'users' ])->name('get.users');
+        Route::get('user/products/{user}', array( ProductController::class, 'users' ))->name('get.users');
     }
 );

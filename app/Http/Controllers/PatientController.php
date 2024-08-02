@@ -36,16 +36,18 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        return User::create([
-            'name' => $request['name'],
-            'username' => 'patient_' . uniqid(),
-            'email' => $request['email'],
-            'role' => 'patient',
-            'phone' => $request['phone'] ?? null,
-            'home_number' => $request['home_number'] ?? null,
-            'address' => $request['address'] ?? null,
-            'password' => Hash::make(uniqid()),
-        ]);
+        return User::create(
+            array(
+                'name'        => $request['name'],
+                'username'    => 'patient_' . uniqid(),
+                'email'       => $request['email'],
+                'role'        => 'patient',
+                'phone'       => $request['phone'] ?? null,
+                'home_number' => $request['home_number'] ?? null,
+                'address'     => $request['address'] ?? null,
+                'password'    => Hash::make(uniqid()),
+            )
+        );
     }
 
     /**
@@ -53,7 +55,6 @@ class PatientController extends Controller
      */
     public function show(patient $patient)
     {
-        //
     }
 
     /**
@@ -61,7 +62,6 @@ class PatientController extends Controller
      */
     public function edit(patient $patient)
     {
-        //
     }
 
     /**
@@ -69,7 +69,6 @@ class PatientController extends Controller
      */
     public function update(Request $request, patient $patient)
     {
-        //
     }
 
     /**
@@ -77,6 +76,5 @@ class PatientController extends Controller
      */
     public function destroy(patient $patient)
     {
-        //
     }
 }

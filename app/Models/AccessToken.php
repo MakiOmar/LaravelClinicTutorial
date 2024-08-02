@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AccessToken extends Model
 {
-    protected $fillable = [
+    protected $fillable = array(
         'tokenable_type',
         'tokenable_id',
         'name',
@@ -15,7 +15,7 @@ class AccessToken extends Model
         'abilities',
         'last_used_at',
         'expires_at',
-    ];
+    );
 
     protected $table = 'personal_access_tokens';
 

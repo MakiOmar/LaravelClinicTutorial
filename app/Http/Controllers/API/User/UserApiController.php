@@ -20,16 +20,16 @@ class UserApiController extends Controller
      */
     public function index(Request $request)
     {
-        $profile = new Profile();
-        $fillables = $profile->getFillable();
-        $perPage = $request->query('per_page', 10);
+        $profile       = new Profile();
+        $fillables     = $profile->getFillable();
+        $perPage       = $request->query('per_page', 10);
         $usersProfiles = Profile::paginate($perPage)->appends(request()->query());
-        $columnValues = [];
+        $columnValues  = array();
         if ($usersProfiles && count($usersProfiles) > 0) {
             foreach ($usersProfiles as $row) {
-                $temp = [];
+                $temp = array();
                 foreach ($fillables as $column) {
-                    $temp[$column] = $row->$column;
+                    $temp[ $column ] = $row->$column;
                 }
                 $columnValues[] = $temp;
             }
@@ -43,44 +43,49 @@ class UserApiController extends Controller
     public function store(Request $request)
     {
         // Validate the request data
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string',
-            'last_name' => 'nullable|string',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'nullable|string',
-            'home_number' => 'nullable|string',
-            'address' => 'nullable|string',
-            'age' => 'nullable|integer',
-            'bio' => 'nullable|string',
-            'gender' => 'nullable|integer',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            array(
+                'first_name'  => 'required|string',
+                'last_name'   => 'nullable|string',
+                'email'       => 'required|email|unique:users,email',
+                'phone'       => 'nullable|string',
+                'home_number' => 'nullable|string',
+                'address'     => 'nullable|string',
+                'age'         => 'nullable|integer',
+                'bio'         => 'nullable|string',
+                'gender'      => 'nullable|integer',
+            )
+        );
         // Perform the validation
         if ($validator->fails()) {
             // Validation fails
             return $this->errorResponse('In correct or missing data!', 422, $validator->errors());
         }
 
-        $user =  User::create([
-            'name' => $request['first_name'] . ' ' . $request['last_name'] ?? '',
-            'username' => 'user_' . uniqid(),
-            'email' => $request['email'],
-            'role' => 'patient',
-            'phone' => $request['phone'] ?? null,
-            'home_number' => $request['home_number'] ?? null,
-            'address' => $request['address'] ?? null,
-            'password' => Hash::make(uniqid()),
-        ]);
+        $user = User::create(
+            array(
+                'name'        => $request['first_name'] . ' ' . $request['last_name'] ?? '',
+                'username'    => 'user_' . uniqid(),
+                'email'       => $request['email'],
+                'role'        => 'patient',
+                'phone'       => $request['phone'] ?? null,
+                'home_number' => $request['home_number'] ?? null,
+                'address'     => $request['address'] ?? null,
+                'password'    => Hash::make(uniqid()),
+            )
+        );
         if ($user) {
             $userProfile = Profile::create(
-                [
-                    'user_id' => $user->ID,
+                array(
+                    'user_id'    => $user->ID,
                     'first_name' => $request['first_name'] ?? null,
-                    'last_name' => $request['last_name'] ?? null,
-                    'address' => $request['address'] ?? null,
-                    'age' => $request['age'] ?? null,
-                    'bio' => $request['bio'] ?? null,
-                    'gender' => $request['gender'] ?? 1,
-                ]
+                    'last_name'  => $request['last_name'] ?? null,
+                    'address'    => $request['address'] ?? null,
+                    'age'        => $request['age'] ?? null,
+                    'bio'        => $request['bio'] ?? null,
+                    'gender'     => $request['gender'] ?? 1,
+                )
             );
             return $this->successResponse($userProfile, 'User has been added successflly', 200);
         } else {
@@ -107,32 +112,35 @@ class UserApiController extends Controller
     public function update(Request $request, User $user)
     {
         // Validate the request data
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string',
-            'last_name' => 'nullable|string',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'nullable|string',
-            'home_number' => 'nullable|string',
-            'address' => 'nullable|string',
-            'age' => 'nullable|integer',
-            'bio' => 'nullable|string',
-            'gender' => 'nullable|integer',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            array(
+                'first_name'  => 'required|string',
+                'last_name'   => 'nullable|string',
+                'email'       => 'required|email',
+                'phone'       => 'nullable|string',
+                'home_number' => 'nullable|string',
+                'address'     => 'nullable|string',
+                'age'         => 'nullable|integer',
+                'bio'         => 'nullable|string',
+                'gender'      => 'nullable|integer',
+            )
+        );
         // Perform the validation
         if ($validator->fails()) {
             // Validation fails
             return $this->errorResponse('In correct or missing data!', 422, $validator->errors());
         }
 
-        $user->name = $request['first_name'] . ' ' . $request['last_name'] ?? '';
+        $user->name  = $request['first_name'] . ' ' . $request['last_name'] ?? '';
         $user->phone = $request['phone'] ?? null;
         $user->save();
         $user->profile->first_name = $request['first_name'];
-        $user->profile->last_name = $request['last_name'] ?? null;
-        $user->profile->address = $request['address'] ?? null;
-        $user->profile->age = $request['age'] ?? null;
-        $user->profile->bio = $request['bio'] ?? null;
-        $user->profile->gender = $request['gender'] ?? 1;
+        $user->profile->last_name  = $request['last_name'] ?? null;
+        $user->profile->address    = $request['address'] ?? null;
+        $user->profile->age        = $request['age'] ?? null;
+        $user->profile->bio        = $request['bio'] ?? null;
+        $user->profile->gender     = $request['gender'] ?? 1;
         $user->profile->save();
         return $this->successResponse($user->ID, 'User has been edited successflly', 200);
     }

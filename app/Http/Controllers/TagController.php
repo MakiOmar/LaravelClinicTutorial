@@ -33,14 +33,16 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'content' => 'required|string|max:255',
-        ]);
+        $validated = $request->validate(
+            array(
+                'content' => 'required|string|max:255',
+            )
+        );
 
         Tag::create(
-            [
+            array(
                 'content' => $validated['content'],
-            ]
+            )
         );
         return redirect()->back()->with('success', 'Tag has been added successfully');
     }
@@ -50,7 +52,6 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        //
     }
 
     /**
@@ -58,7 +59,6 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        //
     }
 
     /**
@@ -66,7 +66,6 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
     }
 
     /**

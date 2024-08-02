@@ -19,19 +19,22 @@ class RegistrationController extends Controller
     {
 
         // Create a new Validator instance
-        $validator = Validator::make($request->all(), [
-            'name' => ['required'],
-            'email' => [
-                'required',
-                'email',
-                'unique:users,email'
-            ],
-            'password' => [
-                'required',
-                'min:8',
-                'confirmed'
-            ]
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            array(
+                'name'     => array( 'required' ),
+                'email'    => array(
+                    'required',
+                    'email',
+                    'unique:users,email',
+                ),
+                'password' => array(
+                    'required',
+                    'min:8',
+                    'confirmed',
+                ),
+            )
+        );
 
         // Perform the validation
         if ($validator->fails()) {
@@ -39,16 +42,18 @@ class RegistrationController extends Controller
             return $this->errorResponse('In correct or missing data!', 422, $validator->errors());
         }
 
-        $user = User::create([
-            'name' => request('name'),
-            'email' => request('email'),
-            'username' => request('email'),
-            'role'     => request('role'),
-            'password' =>  Hash::make(request('password')),
-        ]);
+        $user = User::create(
+            array(
+                'name'     => request('name'),
+                'email'    => request('email'),
+                'username' => request('email'),
+                'role'     => request('role'),
+                'password' => Hash::make(request('password')),
+            )
+        );
 
         return $user
-                 ->createToken(request('email'))
-                 ->plainTextToken;
+                ->createToken(request('email'))
+                ->plainTextToken;
     }
 }

@@ -15,10 +15,13 @@ class LoginController extends Controller
     public function __invoke(Request $request)
     {
         // Create a new Validator instance
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            array(
+                'email'    => 'required|email',
+                'password' => 'required',
+            )
+        );
 
         // Perform the validation
         if ($validator->fails()) {
@@ -30,10 +33,10 @@ class LoginController extends Controller
         ->where('email', $request->email)
         ->first();
 
-        if (!$user) {
+        if (! $user) {
             return $this->errorResponse('There is no such user!', 404, null);
         }
-        if (!Hash::check($request->password, $user->password)) {
+        if (! Hash::check($request->password, $user->password)) {
             return $this->errorResponse('Wrong passowrd!', 422, null);
         }
         return $user

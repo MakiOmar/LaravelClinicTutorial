@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    protected $fillable = [
-        'content'
-    ];
+    protected $fillable = array(
+        'content',
+    );
 
     protected $table = 'tags';
 

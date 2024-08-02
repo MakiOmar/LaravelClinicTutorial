@@ -15,11 +15,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = Auth()->user();
+        $user          = Auth()->user();
         $currentUserId = $user->ID;
-        $usersProfiles = Profile::with('withUser')->whereHas('withUser', function ($query) use ($currentUserId) {
-            $query->where('user_id', '!=', $currentUserId);
-        })->paginate(10);
+        $usersProfiles = Profile::with('withUser')->whereHas(
+            'withUser',
+            function ($query) use ($currentUserId) {
+                $query->where('user_id', '!=', $currentUserId);
+            }
+        )->paginate(10);
 
         return view('users.index', compact('user', 'usersProfiles'));
     }
@@ -39,39 +42,43 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // Validate the request data
-        $validatedData = $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'nullable|string',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'nullable|string',
-            'home_number' => 'nullable|string',
-            'address' => 'nullable|string',
-            'age' => 'nullable|integer',
-            'bio' => 'nullable|string',
-            'gender' => 'nullable|integer',
-        ]);
+        $validatedData = $request->validate(
+            array(
+                'first_name'  => 'required|string',
+                'last_name'   => 'nullable|string',
+                'email'       => 'required|email|unique:users,email',
+                'phone'       => 'nullable|string',
+                'home_number' => 'nullable|string',
+                'address'     => 'nullable|string',
+                'age'         => 'nullable|integer',
+                'bio'         => 'nullable|string',
+                'gender'      => 'nullable|integer',
+            )
+        );
 
-        $user =  User::create([
-            'name' => $request['first_name'] . ' ' . $request['last_name'] ?? '',
-            'username' => 'user_' . uniqid(),
-            'email' => $request['email'],
-            'role' => 'patient',
-            'phone' => $request['phone'] ?? null,
-            'home_number' => $request['home_number'] ?? null,
-            'address' => $request['address'] ?? null,
-            'password' => Hash::make(uniqid()),
-        ]);
+        $user = User::create(
+            array(
+                'name'        => $request['first_name'] . ' ' . $request['last_name'] ?? '',
+                'username'    => 'user_' . uniqid(),
+                'email'       => $request['email'],
+                'role'        => 'patient',
+                'phone'       => $request['phone'] ?? null,
+                'home_number' => $request['home_number'] ?? null,
+                'address'     => $request['address'] ?? null,
+                'password'    => Hash::make(uniqid()),
+            )
+        );
 
         Profile::create(
-            [
-                'user_id' => $user->ID,
+            array(
+                'user_id'    => $user->ID,
                 'first_name' => $request['first_name'] ?? null,
-                'last_name' => $request['last_name'] ?? null,
-                'address' => $request['address'] ?? null,
-                'age' => $request['age'] ?? null,
-                'bio' => $request['bio'] ?? null,
-                'gender' => $request['gender'] ?? 1,
-            ]
+                'last_name'  => $request['last_name'] ?? null,
+                'address'    => $request['address'] ?? null,
+                'age'        => $request['age'] ?? null,
+                'bio'        => $request['bio'] ?? null,
+                'gender'     => $request['gender'] ?? 1,
+            )
         );
 
         return redirect()->route('user.create')->with('success', 'User has been added successflly');
@@ -101,28 +108,30 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         // Validate the request data
-        $validatedData = $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'nullable|string',
-            'phone' => 'nullable|string',
-            'address' => 'nullable|string',
-            'age' => 'nullable|integer',
-            'bio' => 'nullable|string',
-            'gender' => 'nullable|integer',
-        ]);
+        $validatedData = $request->validate(
+            array(
+                'first_name' => 'required|string',
+                'last_name'  => 'nullable|string',
+                'phone'      => 'nullable|string',
+                'address'    => 'nullable|string',
+                'age'        => 'nullable|integer',
+                'bio'        => 'nullable|string',
+                'gender'     => 'nullable|integer',
+            )
+        );
 
-        $user->name = $request['first_name'] . ' ' . $request['last_name'] ?? '';
+        $user->name  = $request['first_name'] . ' ' . $request['last_name'] ?? '';
         $user->phone = $request['phone'] ?? null;
         $user->save();
         $user->profile->first_name = $request['first_name'];
-        $user->profile->last_name = $request['last_name'] ?? null;
-        $user->profile->address = $request['address'] ?? null;
-        $user->profile->age = $request['age'] ?? null;
-        $user->profile->bio = $request['bio'] ?? null;
-        $user->profile->gender = $request['gender'] ?? 1;
+        $user->profile->last_name  = $request['last_name'] ?? null;
+        $user->profile->address    = $request['address'] ?? null;
+        $user->profile->age        = $request['age'] ?? null;
+        $user->profile->bio        = $request['bio'] ?? null;
+        $user->profile->gender     = $request['gender'] ?? 1;
         $user->profile->save();
         return redirect()
-        ->route('user.edit', [ 'user' => $user->ID ])
+        ->route('user.edit', array( 'user' => $user->ID ))
         ->with('success', 'User has been edited successflly');
     }
 
