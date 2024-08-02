@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\DemoController;
 use App\Http\Controllers\API\LoginController as ApiLoginController;
 use App\Http\Controllers\API\LogoutController as ApiLogoutController;
+use App\Http\Controllers\API\RegistrationController as RegController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,5 +27,6 @@ Route::middleware(['auth:sanctum'])
    });
 
 Route::post('/login', ApiLoginController::class);
+Route::post('/register', RegController::class);
 
 Route::get('demo', [ DemoController::class, 'exampleMethod' ]);

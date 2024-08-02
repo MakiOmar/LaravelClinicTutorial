@@ -71,6 +71,7 @@ class ProfileController extends Controller
         // Method two
         $user = Auth()->user();
         $user->name = $validated['name'];
+
         $user->profile->first_name = $validated['first_name'];
         $user->profile->last_name = $validated['last_name'];
         $user->profile->address = $validated['address'];
@@ -78,8 +79,6 @@ class ProfileController extends Controller
         $user->profile->bio = $validated['bio'];
         $user->profile->gender = $validated['gender'];
         $user->profile->save();
-        $user->save();
-
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
