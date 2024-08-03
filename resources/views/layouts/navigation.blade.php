@@ -58,6 +58,7 @@
                             @if (Route::has('product'))
                                 <a class="dropdown-item" href="{{ route('product') }}">{{ __('product') }}</a>
                             @endif
+                            <a class="dropdown-item" href="{{ route('tags') }}">{{ __('Tags') }}</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

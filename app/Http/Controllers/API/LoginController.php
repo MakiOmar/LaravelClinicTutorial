@@ -43,14 +43,8 @@ class LoginController extends Controller
             return $this->errorResponse('Wrong passowrd!', 422, null);
         }
 
-        $token = $user
+        return $user
                 ->createToken($request->email)
                 ->plainTextToken;
-        $cookie = cookie('sanctum_token', $token, 60 * 24);
-        // Return the response with the cookie
-        return response()->json([
-            'message' => 'Login successful',
-            'token' => $token,
-        ])->withCookie($cookie);
     }
 }

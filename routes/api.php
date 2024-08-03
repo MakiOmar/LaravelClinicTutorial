@@ -7,6 +7,8 @@ use App\Http\Controllers\API\LoginController as ApiLoginController;
 use App\Http\Controllers\API\LogoutController as ApiLogoutController;
 use App\Http\Controllers\API\RegistrationController as RegController;
 use App\Http\Controllers\API\User\UserApiController;
+use App\Http\Controllers\API\Tag\TagApiController;
+use App\Http\Controllers\API\ProductApiController;
 
 /*
 |
@@ -38,6 +40,25 @@ Route::middleware(array( 'auth.gate' ))
                     Route::post('/create', array( UserApiController::class, 'store' ));
                     Route::put('/update/{user}', array( UserApiController::class, 'update' ));
                     Route::delete('/delete/{user}', array( UserApiController::class, 'destroy' ));
+                }
+            );
+
+            Route::group(
+                array( 'prefix' => 'product' ),
+                function () {
+                    Route::get('/all', array( ProductApiController::class, 'index' ));
+                    /*Route::get('/show/{user}', array( UserApiController::class, 'show' ));
+                    Route::post('/create', array( UserApiController::class, 'store' ));
+                    Route::put('/update/{user}', array( UserApiController::class, 'update' ));
+                    Route::delete('/delete/{user}', array( UserApiController::class, 'destroy' ));*/
+                }
+            );
+            Route::group(
+                array( 'prefix' => 'tag' ),
+                function () {
+                    Route::get('/all', array( TagApiController::class, 'index' ));
+                    Route::post('/create', array( TagApiController::class, 'store' ));
+                    Route::delete('/delete/{tag}', array( TagApiController::class, 'destroy' ));
                 }
             );
         }

@@ -35,7 +35,7 @@ class TagController extends Controller
     {
         $validated = $request->validate(
             array(
-                'content' => 'required|string|max:255',
+                'content' => 'required|string|unique:tags,content|max:255',
             )
         );
 
